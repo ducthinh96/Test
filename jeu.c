@@ -1,17 +1,28 @@
 #include <stdio.h>
+#include <string.h>
+#include <time.h>
+#include <stdlib.h>
 
-int hp, xp, lvl, choix=12, x, y;
+int hp = 50, xp = 0, xpmax = 10, lvl = 1, choix=12, x, y, weapon_dmg = 0, armor_def = 0;
+int atk = 1, def = 1;
+int ennemy_atk, ennemy_def;
+char weapon[30] = "Bâton en bois", armor[30] = "Armure en tissu", random_ennemy[30];
 
 //----------initialisation-----------------
 void premier_tour();
 void afficher_terrain();
+void voir_inventaire();
+void init_obj();
+void fiche_personnage();
+void rand_ennemy();
 
 
 int main()
 {
 
     char bidon;
-    
+
+    init_obj();
     premier_tour();
     printf("\n");
     
@@ -22,7 +33,7 @@ int main()
         printf("Que voulez-vous faire ?\n");
         printf("-1-Afficher terrain\n");
         printf("-2-Mouvement\n");
-        printf("-3-Attaquer\n");
+        printf("-3-Fouiller\n");
         printf("-4-Voir inventaire\n");
         printf("-5-Voir Fiche personnage\n");
         printf("-0-Quitter jeu\n");
@@ -39,6 +50,12 @@ int main()
                     break;
                 case 0:
                     printf("Au revoir !\n");
+                    break;
+                case 3:
+                    rand_ennemy();
+                    break;
+                case 5:
+                    fiche_personnage();
                     break;
                 default: 
                     printf("Choix invalide !\n");
@@ -105,4 +122,67 @@ void afficher_terrain()
         printf("\n");
     }//fin boucle for i
 
+}
+
+//--------------Voir inventaire-------------
+void voir_inventaire()
+{
+    printf("Armes/Armures \n");
+    printf("Arme : %s\n", weapon);
+    printf("+%d Atk\n", weapon_dmg);
+    printf("Armure : %s\n", armor);
+    printf("+%d Def\n", armor_def);
+}
+
+//-----------Initialisation objets----------
+void init_obj()
+{
+    int dif;
+
+    //----init weapon----
+    if ((dif = strncmp(weapon,"Bâton en bois", 30)) == 0)
+    {
+        weapon_dmg = 1 ;
+    }
+
+    //-----init armor----
+    if ((dif = strncmp(armor,"Armure en tissu", 30)) == 0)
+    {
+        armor_def = 1;
+    }
+
+}
+
+//-------------Afficher fiche personnage---------
+void fiche_personnage()
+{
+    printf("Niveau : %d\n", lvl);
+    printf("XP : %d/%d\n", xp, xpmax);
+    printf("Attaque : %d\n", atk + weapon_dmg);
+    printf("Défense : %d\n", def + armor_def);
+}
+
+//-------------Ennemi aléatoire---------------
+void rand_ennemy()
+{
+    int r;
+
+    srand(time(NULL)); 
+
+    r = rand() %100;
+
+    if (r >= 0 && r <= 50)
+    {
+        strcpy(random_ennemy,"Gobelin faiblard");
+        ennemy_atk = 1;
+        ennemy_def = 1;
+    }
+    else
+    {
+        strcpy(random_ennemy,"Loup maigre");
+        ennemy_atk = 2;
+        ennemy_def = 1;
+    }
+
+    printf("Un ennemi vous attaque : %s (Atk : %d, Def : %d)\n", random_ennemy, ennemy_atk, ennemy_def);
 }
