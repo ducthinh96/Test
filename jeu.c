@@ -6,6 +6,7 @@
 int hp = 50, xp = 0, xpmax = 10, lvl = 1, choix=12, x, y, weapon_dmg = 0, armor_def = 0;
 int atk = 1, def = 1;
 int ennemy_atk, ennemy_def;
+char bidon;
 char weapon[30] = "Bâton en bois", armor[30] = "Armure en tissu", random_ennemy[30];
 
 //----------initialisation-----------------
@@ -15,12 +16,12 @@ void voir_inventaire();
 void init_obj();
 void fiche_personnage();
 void rand_ennemy();
+void mouvement();
+void empty_buffer();
 
 
 int main()
 {
-
-    char bidon;
 
     init_obj();
     premier_tour();
@@ -29,6 +30,7 @@ int main()
     //-------Menu choix------------
     while (choix != 0)
     {
+        char bidon;
         printf("--------------------------\n");
         printf("Que voulez-vous faire ?\n");
         printf("-1-Afficher terrain\n");
@@ -51,6 +53,11 @@ int main()
                 case 0:
                     printf("Au revoir !\n");
                     break;
+                case 2:
+                    empty_buffer();
+                    mouvement();
+                    empty_buffer();
+                    break;
                 case 3:
                     rand_ennemy();
                     break;
@@ -67,12 +74,13 @@ int main()
         }
         else 
         {
-            while ((bidon=getchar()) != '\n') ;
+            empty_buffer();
             printf("Saisie incorrecte !\n");
         }
 
     }
 
+    empty_buffer();
     return 0;
 
 }
@@ -190,4 +198,42 @@ void rand_ennemy()
     }
 
     printf("Un ennemi vous attaque : %s (Atk : %d, Def : %d)\n", random_ennemy, ennemy_atk, ennemy_def);
+}
+
+//-----------Mouvement--------
+void mouvement()
+{
+    int direction;
+
+    printf("-1-Aller vers le haut.");
+    printf("-2-Aller vers le bas.");
+    printf("-3-Aller vers la gauche.");
+    printf("-4-Aller vers la droite.");
+    scanf("Quel mouvement souhaitez vous faire ? : %d", &direction);
+
+    switch (direction)
+    {
+        case 1:
+            x--;
+            break;
+        case 2:
+            x++;
+            break;
+        case 3:
+            y--;
+            break;
+        case 4:
+            y++;
+            break;
+    }
+
+    afficher_terrain();
+
+}
+
+
+//---------vider buffer------
+void empty_buffer()
+{
+    while ((bidon=getchar()) != '\n') ;
 }
