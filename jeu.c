@@ -209,7 +209,8 @@ void mouvement()
     printf("-2-Aller vers le bas.");
     printf("-3-Aller vers la gauche.");
     printf("-4-Aller vers la droite.");
-    scanf("Quel mouvement souhaitez vous faire ? : %d", &direction);
+    printf("Quel mouvement souhaitez vous faire ? : ");
+    scanf("%d", &direction);
 
     switch (direction)
     {
