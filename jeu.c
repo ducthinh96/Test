@@ -54,6 +54,9 @@ int main()
                 case 3:
                     rand_ennemy();
                     break;
+                case 4:
+                    voir_inventaire();
+                    break;
                 case 5:
                     fiche_personnage();
                     break;
@@ -80,8 +83,10 @@ void premier_tour()
     int i, j;
 
     //----------------Saisie emplacement joueur1-----------------
+    afficher_terrain();
+
     printf("\n");
-    printf("Entrez l'emplacement du joueur : ");
+    printf("Entrez l'emplacement du joueur (x y) : ");
     scanf("%d %d", &x, &y);
     printf("\n");
 
